@@ -1,2 +1,2 @@
-# myBlog
+# Blog
 an easy personal blog
