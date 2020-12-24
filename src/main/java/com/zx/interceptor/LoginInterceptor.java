@@ -14,14 +14,16 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 
         // 根据cookie的token比较判断用户是否登录
         Cookie[] cookies = request.getCookies();
-        for (int i = 0; i < cookies.length; i++) {
-            if (cookies[i].getName().equals("token")){
-                String value = cookies[i].getValue();
-                boolean b = JwtUtils.parseToken(value);
-                if (b){
-                    return true;
+        if (cookies != null){
+            for (int i = 0; i < cookies.length; i++) {
+                if (cookies[i].getName().equals("token")){
+                    String value = cookies[i].getValue();
+                    boolean b = JwtUtils.parseToken(value);
+                    if (b){
+                        return true;
+                    }
+                    break;
                 }
-                break;
             }
         }
         response.sendRedirect("/admin");

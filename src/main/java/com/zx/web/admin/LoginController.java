@@ -58,11 +58,11 @@ public class LoginController {
         User user = userService.checkUser(username, MD5Utils.code(password));
         if (user != null){
             String token = JwtUtils.createJWT(user);
-            Cookie cookie = CookieUtils.createCookie("token", token, 30);
+            Cookie cookie = CookieUtils.createCookie("token", token, "/admin",30);
             ObjectMapper objectMapper = new ObjectMapper();
             String u = objectMapper.writeValueAsString(user);
             String encode = URLEncoder.encode(u, "utf-8");
-            Cookie cookie2 = CookieUtils.createCookie("user", encode, 30);
+            Cookie cookie2 = CookieUtils.createCookie("user", encode, "/",30);
             response.addCookie(cookie);
             response.addCookie(cookie2);
         } else {

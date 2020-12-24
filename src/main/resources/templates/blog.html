@@ -507,13 +507,13 @@ h5,h6{font-size:1em;}
             <div class="field m-mobile-wide m-margin-bottom-small">
               <div class="ui left icon input">
                 <i class="user icon"></i>
-                <input type="text" name="nickname" placeholder="姓名" th:value="${session.user}!=null ? ${session.user.nickname}">
+                <input type="text" name="nickname" placeholder="姓名">
               </div>
             </div>
             <div class="field m-mobile-wide m-margin-bottom-small">
               <div class="ui left icon input">
                 <i class="mail icon"></i>
-                <input type="text" name="email" placeholder="邮箱" th:value="${session.user}!=null ? ${session.user.email}">
+                <input type="text" name="email" placeholder="邮箱">
               </div>
             </div>
             <div class="field  m-margin-bottom-small m-mobile-wide">
@@ -553,6 +553,24 @@ h5,h6{font-size:1em;}
 <th:block th:replace="_fragments :: script"></th:block>
 
   <script th:inline="javascript">
+
+    $(function () {
+      $("#comment-container").load("/comments/"+[[${blog.id}]]);
+      var u = Cookie.get("user");
+      if (u!=null){
+        var user = JSON.parse(u);
+        if (user.nickname != null && user.nickname != ""){
+          $("input[name='nickname']").attr("value",user.nickname);
+          $("input[name='nickname']").attr("disabled","disabled");
+        }
+        if (user.email != null && user.email != ""){
+          $("input[name='email']").attr("value",user.email);
+          $("input[name='email']").attr("disabled","disabled");
+        }
+      }
+    });
+
+
     $('.menu.toggle').click(function (){
       $('.m-item').toggleClass('m-mobile-hide');
     });
@@ -631,10 +649,6 @@ h5,h6{font-size:1em;}
           }]
         }
       }
-    });
-
-    $(function () {
-      $("#comment-container").load("/comments/"+[[${blog.id}]]);
     });
 
     $('#commentpost-btn').click(function () {

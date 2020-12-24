@@ -1,9 +1,11 @@
 package com.zx.web;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zx.po.Comment;
 import com.zx.po.User;
 import com.zx.service.BlogService;
 import com.zx.service.CommentService;
+import com.zx.utils.CookieUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -12,7 +14,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.net.URLDecoder;
 
 /**
  * @Author: zzx
@@ -40,10 +46,13 @@ public class CommentController {
 
 
     @PostMapping("/comments")
-    public String post(Comment comment, HttpSession session) {
+    public String post(Comment comment, HttpSession session, HttpServletRequest request) throws IOException {
         Long blogId = comment.getBlog().getId();
         comment.setBlog(blogService.getBlog(blogId));
-        User user = (User) session.getAttribute("user");
+        // User user = (User) session.getAttribute("user");
+        Cookie cookie = CookieUtils.getCookie(request, "user");
+        ObjectMapper mapper = new ObjectMapper();
+        User user = mapper.readValue(URLDecoder.decode(cookie.getValue(),"utf-8"), User.class);
         if (user != null) {
             if (comment.getBlog().getUser().getId().equals(user.getId())){
                 comment.setAdminComment(true);
