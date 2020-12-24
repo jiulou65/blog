@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="admin/_fragments :: head(~{::title})">
+  <title>博客管理</title>
+</head>
+<body>
+  <!-- 导航 -->
+  <nav id="header" th:replace="admin/_fragments :: menu(1)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small"></nav>
+
+  <!--中间内容-->
+  <div  class="m-container-small m-padded-tb-big">
+    <div class="ui container">
+      <div class="ui gray large message">
+        <h2>Hi</h2>
+        <p><nbor><p th:text="${session.user.nickname}"></p></nbor></p>
+      </div>
+    </div>
+  </div>
+
+  <br>
+  <br>
+  <!-- 底部 -->
+  <footer id="footer" th:replace="admin/_fragments :: footer" class="ui inverted segment m-padded-tb-massive"></footer>
+
+  <!--/*/<th:block th:replace="admin/_fragments :: script">/*/-->
+  <!--/*/</th:block>/*/-->
+
+</body>
+</html>

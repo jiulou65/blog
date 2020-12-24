@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="admin/_fragments :: head(~{::title})">
+  <title>博客列表</title>
+</head>
+<body>
+
+  <!-- 导航 -->
+  <nav id="header" th:replace="admin/_fragments :: menu(1)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small">  </nav>
+
+  <!-- 二级导航 -->
+  <div class="ui attached pointing menu">
+    <div class="ui container">
+      <div class="right menu">
+        <a href="" th:href="@{/admin/blogs/input}" class="item">发布</a>
+        <a href="" th:href="@{/admin/blogs}" class="teal active item">列表</a>
+      </div>
+    </div>
+  </div>
+
+  <!--中间内容-->
+  <div  class="m-container-small m-padded-tb-big">
+    <div class="ui container">
+      <div class="ui segment form">
+        <input type="hidden" name="page">
+        <div class="inline fields">
+          <div class="field">
+            <input type="text" name="title" placeholder="标题">
+          </div>
+          <div class="field">
+            <div class="ui labeled action input">
+              <div class="ui type selection dropdown">
+                <input type="hidden" name="typeId">
+                <i class="dropdown icon"></i>
+                <div class="default text">分类</div>
+                <div class="menu">
+                  <div th:each="type : ${types}" class="item" data-value="1" th:data-value="${type.id}" th:text="${type.name}"></div>
+                </div>
+              </div>
+              <button id="clear_btn" class="ui teal basic button">清空</button>
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="ui checkbox">
+              <input type="checkbox" id="recommend" name="recommend">
+              <label for="recommend">推荐</label>
+            </div>
+          </div>
+
+          <div class="field">
+            <button type="button" id="search_btn" class="ui mini teal basic button"><i class="search icon"></i>搜索</button>
+          </div>
+        </div>
+      </div>
+      <div id="table-container">
+        <table th:fragment="blogList" class="ui celled compact  table">
+          <thead>
+          <tr>
+            <th></th>
+            <th>标题</th>
+            <th>类型</th>
+            <th>推荐</th>
+            <th>发布状态</th>
+            <th>更新时间</th>
+            <th>操作</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="blog,iterStat : ${page.content}">
+            <td th:text="${iterStat.count}">1</td>
+            <td>
+              <a th:text="${blog.title}" th:href="@{/blog/{id}(id=${blog.id})}">编辑</a>
+            </td>
+            <td th:text="${blog.type.name}">认知升级</td>
+            <td th:text="${blog.recommend} ? '是':'否' ">是</td>
+            <td th:text="${blog.published} ? '发布':'草稿' ">草稿</td>
+            <td th:text="${#dates.format(blog.updateTime,'yyyy-MM-dd HH:mm:ss')}">2019-11-29 21:45</td>
+            <td>
+              <a href="#" th:href="@{/admin/blogs/{id}/input(id=${blog.id})}" class="ui mini teal basic button">编辑</a>
+              <a href="#" th:href="@{/admin/blogs/{id}/delete(id=${blog.id})}" class="ui mini red basic button">删除</a>
+            </td>
+          </tr>
+          </tbody>
+          <tfoot>
+          <tr>
+            <th colspan="7">
+              <div class="ui mini pagination menu" th:if="${page.totalPages}>1">
+                <a onclick="page(this)" th:attr="data-page=${page.number-1}" class="item" th:unless="${page.first}">上一页</a>
+                <a onclick="page(this)" th:attr="data-page=${page.number+1}" class="item" th:unless="${page.last}">下一页</a>
+              </div>
+              <a href="#" th:href="@{/admin/blogs/input}" class="ui mini right floated teal basic button">新增</a>
+            </th>
+          </tr>
+          </tfoot>
+        </table>
+        <div class="ui success message" th:unless="${#strings.isEmpty(message)}">
+          <i class="close icon"></i>
+          <div class="header">提示：</div>
+          <p th:text="${message}">恭喜，操作成功！</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <br>
+  <br>
+  <!-- 底部 -->
+  <footer id="footer" th:replace="admin/_fragments :: footer" class="ui inverted segment m-padded-tb-massive">  </footer>
+
+  <!--/*/<th:block th:replace="admin/_fragments :: script">/*/-->
+  <!--/*/</th:block>/*/-->
+
+  <script>
+
+    // 消息关闭提示初始化
+    $('.message .close').on('click',function () {
+      $(this).closest('.message').transition('fade');
+    });
+
+    $('#clear_btn').on('click',function () {
+      $('.ui.type.dropdown').dropdown('clear')
+    });
+
+    function page(obj) {
+      $("[name='page']").val($(obj).data("page"));
+      loaddata();
+    }
+
+    $("#search_btn").click(function () {
+      $("[name='page']").val(0);
+      loaddata();
+    });
+
+    function loaddata() {
+      $("#table-container").load("/admin/blogs/search",{
+        title : $("[name='title']").val(),
+        typeId : $("[name='typeId']").val(),
+        recommend : $("[name='recommend']").prop('checked'),
+        page : $("[name='page']").val()
+      });
+    }
+
+  </script>
+</body>
+</html>

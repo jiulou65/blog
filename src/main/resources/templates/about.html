@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="_fragments :: head(~{::title})">
+  <title>关于我</title>
+</head>
+<body>
+
+<!-- 导航 -->
+<nav id="header" th:replace="_fragments :: menu(5)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small"></nav>
+
+<!-- 中间部分 -->
+<div class="m-container m-padded-tb-big">
+  <div class="ui container">
+
+    <div class="ui stackable grid">
+      <div class="eleven wide column">
+        <div class="ui segment">
+          <img src="https://picsum.photos/id/1/800/600?image=1025" class="ui fluid rounded image">
+        </div>
+      </div>
+      <div class="five wide column">
+        <div class="ui top attached segment">
+          <div class="ui header">关于我</div>
+        </div>
+        <div class="ui attached segment">
+          <p class="m-text">撒撒范德萨劳烦你凯夫拉苏宁客服阿萨的绿卡墨索里尼泛滥发拉萨扩大马拉松可能伐啦是南方撒赖扩</p>
+          <p class="m-text">奥数老师看上了福利萨达姆萨拉能否。。。。。。。</p>
+        </div>
+        <div class="ui attached segment">
+          <div class="ui orange basic left pointing label m-padded-small m-margin-tb-tiny">Java</div>
+          <div class="ui orange basic left pointing label m-padded-small m-margin-tb-tiny">Java</div>
+          <div class="ui orange basic left pointing label m-padded-small m-margin-tb-tiny">Java</div>
+          <div class="ui orange basic left pointing label m-padded-small m-margin-tb-tiny">Java</div>
+        </div>
+        <div class="ui attached segment">
+          <div class="ui teal basic left pointing label m-padded-tiny m-margin-tb-tiny">乃神人也</div>
+          <div class="ui teal basic left pointing label m-padded-tiny m-margin-tb-tiny">乃神人也</div>
+          <div class="ui teal basic left pointing label m-padded-tiny m-margin-tb-tiny">乃神人也</div>
+          <div class="ui teal basic left pointing label m-padded-tiny m-margin-tb-tiny">...</div>
+
+        </div>
+        <div class="ui bottom attached segment">
+          <div class="ui circular icon button"><i class="github icon"></i></div>
+          <div class="ui wechat circular icon button"><i class="wechat icon"></i></div>
+          <div class="ui qq circular icon button" data-content="1235468" data-position="bottom center"><i class="qq icon"></i></div>
+        </div>
+        <div class="ui wechatQR flowing popup transition hidden m-padded-small" >
+          <img src="../static/images/wechat.jpg" th:src="@{/images/wechat.jpg}" class="ui rounded image" style="width: 100px;">
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<br>
+<br>
+<!-- 底部 -->
+<footer id="footer" th:replace="_fragments :: footer" class="ui inverted segment m-padded-tb-massive"></footer>
+
+
+<!--/*/<th:block th:replace="_fragments :: script">/*/-->
+<!--/*/</th:block>/*/-->
+
+  <script>
+    $('.menu.toggle').click(function () {
+      $('.m-item').toggleClass('m-mobile-hide');
+    });
+
+    $('.wechat').popup({
+      popup : $('.wechatQR'),
+      position: 'bottom center'
+    });
+    $('.qq').popup();
+  </script>
+</body>
+</html>
