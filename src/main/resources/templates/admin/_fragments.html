@@ -26,8 +26,8 @@
       <div class="right menu">
         <div class="ui dropdown item">
           <div class="text">
-            <img class="ui avatar image" src="https://picsum.photos/id/1/100/100?image=1025" th:src="@{${session.user.avatar}}">
-            <span th:text="${session.user.nickname}"></span>
+            <img id="av" class="ui avatar image" > <!--th:src="@{${session.user.avatar}}"-->
+            <span id="na" ></span> <!--th:text="${session.user.nickname}"-->
           </div>
           <i class="dropdown icon"></i>
           <div class="menu">
@@ -95,21 +95,30 @@
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery.scrollto@2.1.2/jquery.scrollTo.min.js"></script>
+  <script src="../static/lib/prism/prism.js" th:src="@{/js/myCookie.js}"></script>
   <script src="../static/lib/prism/prism.js" th:src="@{/lib/prism/prism.js}"></script>
   <script src="../static/lib/tocbot/tocbot.min.js" th:src="@{/lib/tocbot/tocbot.min.js}"></script>
   <script src="../static/lib/qrcode/qrcode.min.js" th:src="@{/lib/qrcode/qrcode.min.js}"></script>
   <script src="../static/lib/waypoints/jquery.waypoints.min.js" th:src="@{/lib/waypoints/jquery.waypoints.min.js}"></script>
   <script src="../../static/lib/editormd/editormd.min.js" th:src="@{/lib/editormd/editormd.min.js}"></script>
 
-<script>
-  $('.ui.dropdown').dropdown({
-    // transition: 'drop'
-  });
-  $('.menu.toggle').click(function (){
-    $('.m-item').toggleClass('m-mobile-hide');
-  });
-  $('#newblog-container').load("/footer/newBlogs");
-</script>
+  <script>
+    $(function () {
+      var user = JSON.parse(Cookie.get("user"));
+      var n = user.nickname;
+      $("#na").html(n);
+      var a = user.avatar;
+      $("#av").attr("src",a);
+    })
+    $('.ui.dropdown').dropdown({
+      // transition: 'drop'
+    });
+    $('.menu.toggle').click(function (){
+      $('.m-item').toggleClass('m-mobile-hide');
+    });
+    $('#newblog-container').load("/footer/newBlogs");
+
+  </script>
 </th:block>
 </body>
 </html>

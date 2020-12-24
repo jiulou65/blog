@@ -12,7 +12,7 @@
     <div class="ui container">
       <div class="ui gray large message">
         <h2>Hi</h2>
-        <p><nbor><p th:text="${session.user.nickname}"></p></nbor></p>
+        <p><nbor><p id="nickname"></p></nbor></p>
       </div>
     </div>
   </div>
@@ -20,10 +20,17 @@
   <br>
   <br>
   <!-- 底部 -->
+
   <footer id="footer" th:replace="admin/_fragments :: footer" class="ui inverted segment m-padded-tb-massive"></footer>
 
-  <!--/*/<th:block th:replace="admin/_fragments :: script">/*/-->
-  <!--/*/</th:block>/*/-->
+  <th:block th:replace="admin/_fragments :: script"></th:block>
+  <script>
+    $(function () {
+      var user = JSON.parse(Cookie.get("user"));
+      var nickname = user.nickname;
+      $("#nickname").html(nickname);
+    })
+  </script>
 
 </body>
 </html>

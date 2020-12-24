@@ -32,9 +32,9 @@
               </div>
               <div class="field">
                 <div class="ui left icon input">
-                  <i class="lock icon"></i>
-                  <input type="password" name="password" placeholder="密码">
-                  <img height="40px" width="180px" th:src="@{/static/images/wechat.jpg}"/>
+                  <i class="shield alternate icon"></i>
+                  <input type="text" name="verifyCode" placeholder="验证码">
+                  <img id="img" height="40px" width="180px" th:src="@{/admin/getKaptchaImage}"/>
                 </div>
               </div>
               <button class="ui fluid large blue submit button">登录</button>
@@ -58,6 +58,11 @@
 
   <script>
 
+    $("#img").click(function () {
+      var url = "/admin/getKaptchaImage?"+new Date().getTime();
+      $("#img").attr("src",url);
+    });
+
     $('.ui.form').form({
       fields : {
         username : {
@@ -72,6 +77,13 @@
           rules: [{
             type : 'empty',
             prompt: '请输入密码'
+          }]
+        },
+        verifyCode : {
+          identifier: 'verifyCode',
+          rules: [{
+            type : 'empty',
+            prompt: '请输入验证码'
           }]
         }
       }

@@ -1,5 +1,6 @@
 package com.zx.po;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -26,6 +27,7 @@ public class User {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateTime;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<Blog> blogs = new ArrayList<>();
 
