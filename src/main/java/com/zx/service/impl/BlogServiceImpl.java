@@ -34,7 +34,7 @@ public class BlogServiceImpl implements com.zx.service.BlogService {
     @Transactional
     @Override
     public Blog getAndConvert(Long id) {
-        Blog blog = blogRepository.findOne(id);
+        Blog blog = blogRepository.findOneBlog(id);
         if (blog == null){
             throw new NotFoundException("该博客不存在！");
         }
@@ -71,7 +71,12 @@ public class BlogServiceImpl implements com.zx.service.BlogService {
 
     @Override
     public Page<Blog> listBlog(Pageable pageable) {
-        return blogRepository.findAll(pageable);
+        return blogRepository.findAll(new Specification<Blog>() {
+            @Override
+            public Predicate toPredicate(Root<Blog> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
+                return cb.equal(root.get("published"),1);
+            }
+        },pageable);
     }
 
     @Override
