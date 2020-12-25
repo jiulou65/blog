@@ -60,6 +60,7 @@ public class LoginController {
             String token = JwtUtils.createJWT(user);
             Cookie cookie = CookieUtils.createCookie("token", token, "/admin",30);
             ObjectMapper objectMapper = new ObjectMapper();
+            user.setPassword(null);
             String u = objectMapper.writeValueAsString(user);
             String encode = URLEncoder.encode(u, "utf-8");
             Cookie cookie2 = CookieUtils.createCookie("user", encode, "/",30);
