@@ -52,7 +52,10 @@ public class CommentController {
         // User user = (User) session.getAttribute("user");
         Cookie cookie = CookieUtils.getCookie(request, "user");
         ObjectMapper mapper = new ObjectMapper();
-        User user = mapper.readValue(URLDecoder.decode(cookie.getValue(),"utf-8"), User.class);
+        User user = null;
+        if (cookie != null){
+            user = mapper.readValue(URLDecoder.decode(cookie.getValue(),"utf-8"), User.class);
+        }
         if (user != null) {
             if (comment.getBlog().getUser().getId().equals(user.getId())){
                 comment.setAdminComment(true);
