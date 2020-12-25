@@ -4,7 +4,7 @@ an easy personal blog | 一个简单的个人博客
 ![Image text](https://github.com/jiulou65/blog/blob/main/src/main/resources/static/images/logo.png)
 
 
-### 项目技术架构采用：Springboot + SpringDataJpa + Mysql + Thymeleaf
+### 项目技术架构采用：SpringBoot + SpringDataJpa + Mysql + Thymeleaf
 
 上传图片采用的是在线图片，待改进
 
