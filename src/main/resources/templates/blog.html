@@ -550,7 +550,8 @@ h5,h6{font-size:1em;}
 <!--底部footer-->
 <footer th:replace="_fragments :: footer" class="ui inverted vertical segment m-padded-tb-massive"></footer>
 
-<th:block th:replace="_fragments :: script"></th:block>
+<!--/*/<th:block th:replace="_fragments :: script">/*/-->
+<!--/*/</th:block>/*/-->
 
   <script th:inline="javascript">
 
@@ -568,11 +569,6 @@ h5,h6{font-size:1em;}
           $("input[name='email']").attr("disabled","disabled");
         }
       }
-    });
-
-
-    $('.menu.toggle').click(function (){
-      $('.m-item').toggleClass('m-mobile-hide');
     });
 
     $('#payButton').popup({
