@@ -32,4 +32,17 @@ public interface BlogService {
     Blog updateBlog(Long id,Blog blog);
 
     void deleteBlog(Long id);
+
+    /**
+     * 根据关键字查找博客
+     * @param keyWord
+     * @return
+     */
+    List<Blog> findBlogByKeyWord(String keyWord);
+
+    /**
+     * 查找所有博客
+     * @return
+     */
+    List<Blog> findAllBlog();
 }

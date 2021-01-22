@@ -1,5 +1,6 @@
 package com.zx.po;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -21,6 +22,7 @@ public class Comment {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createTime;
 
+    @JsonIgnore
     @ManyToOne
     private Blog blog;
 

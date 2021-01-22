@@ -148,4 +148,14 @@ public class BlogServiceImpl implements com.zx.service.BlogService {
     public void deleteBlog(Long id) {
         blogRepository.delete(id);
     }
+
+    @Override
+    public List<Blog> findBlogByKeyWord(String keyWord) {
+        return blogRepository.findByQuery("%"+keyWord+"%");
+    }
+
+    @Override
+    public List<Blog> findAllBlog() {
+        return blogRepository.findAll();
+    }
 }

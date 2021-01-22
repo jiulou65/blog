@@ -33,4 +33,8 @@ public interface BlogRepository extends JpaRepository<Blog, Long>, JpaSpecificat
     // 查找指定博客
     @Query("select b from Blog b where b.id = ?1 and b.published = true ")
     Blog findOneBlog(Long id);
+
+    // 查找博客
+    @Query("select b from Blog b where b.title like ?1 or b.content like ?1 or b.description like ?1")
+    List<Blog> findByQuery(String keyWord);
 }

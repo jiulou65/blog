@@ -1,5 +1,6 @@
 package com.zx.po;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -18,6 +19,7 @@ public class Type {
     @NotBlank(message = "分类名称不能为空")
     private String name;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "type")
     private List<Blog> blogs = new ArrayList<>();
 
