@@ -5,6 +5,8 @@ import com.zx.po.User;
 import com.zx.service.BlogService;
 import com.zx.service.TagService;
 import com.zx.service.TypeService;
+import com.zx.utils.CookieUtils;
+import com.zx.utils.JwtUtils;
 import com.zx.vo.BlogQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -12,12 +14,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -73,8 +74,11 @@ public class BlogController {
 
 
     @PostMapping("/blogs")
-    public String post(Blog blog, RedirectAttributes redirectAttributes, HttpSession session){
-        blog.setUser((User) session.getAttribute("user"));
+    public String post(HttpServletRequest request, Blog blog, RedirectAttributes redirectAttributes, HttpSession session){
+        Long uid = (Long) request.getAttribute("uid");
+        User u = new User();
+        u.setId(uid);
+        blog.setUser(u);
         blog.setType(typeService.getType(blog.getType().getId()));
         blog.setTags(tagService.listTag(blog.getTagIds()));
 
