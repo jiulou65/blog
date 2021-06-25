@@ -34,7 +34,4 @@ an easy personal blog | 一个简单的个人博客
 评论、删除
 
 
-well
-qq
-cool
-q
+gg
